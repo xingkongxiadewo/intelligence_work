@@ -3,12 +3,23 @@
         <el-card class="box-card" v-for="item in list">
             <CardCom :info="item"></CardCom>
         </el-card>
+        <el-card class="left">
+            <!-- 饼图 -->
+            <Pie></Pie>
+        </el-card>
+        <el-card class="right">
+
+        </el-card>
+        <el-card class="lineCard">
+
+        </el-card>
     </div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
 import CardCom from '../../components/CardCom.vue'
-const list=ref([
+import Pie from '../../components/Echarts/Pie.vue'
+const list = ref([
     {
         "Title": "新增用户",
         "Icon": "CoffeeCup",
