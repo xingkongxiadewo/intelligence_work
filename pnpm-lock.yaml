@@ -9,12 +9,14 @@ specifiers:
   vue: ^3.2.25
   vue-router: ^4.0.13
   vue-tsc: ^0.34.7
+  vuex: ^4.0.2
 
 dependencies:
   element-plus: registry.npmmirror.com/element-plus/2.2.5_vue@3.2.37
   sass: registry.npmmirror.com/sass/1.52.3
   vue: registry.npmmirror.com/vue/3.2.37
   vue-router: registry.npmmirror.com/vue-router/4.0.13_vue@3.2.37
+  vuex: registry.npmmirror.com/vuex/4.0.2_vue@3.2.37
 
 devDependencies:
   '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/2.3.3_vite@2.9.10+vue@3.2.37
@@ -995,4 +997,16 @@ packages:
       '@vue/runtime-dom': registry.npmmirror.com/@vue/runtime-dom/3.2.37
       '@vue/server-renderer': registry.npmmirror.com/@vue/server-renderer/3.2.37_vue@3.2.37
       '@vue/shared': registry.npmmirror.com/@vue/shared/3.2.37
+    dev: false
+
+  registry.npmmirror.com/vuex/4.0.2_vue@3.2.37:
+    resolution: {integrity: sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vuex/-/vuex-4.0.2.tgz}
+    id: registry.npmmirror.com/vuex/4.0.2
+    name: vuex
+    version: 4.0.2
+    peerDependencies:
+      vue: ^3.0.2
+    dependencies:
+      '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api/6.1.4
+      vue: registry.npmmirror.com/vue/3.2.37
     dev: false
