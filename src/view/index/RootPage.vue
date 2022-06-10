@@ -51,7 +51,7 @@ url.value = "/images/logo.0606fdd2.png"
           <HeaderCom></HeaderCom>
         </el-header>
         <el-main>
-          这里是主页面
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
