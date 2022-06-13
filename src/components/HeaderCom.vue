@@ -37,21 +37,13 @@
     <el-row>
         <el-col :span="24">
             <el-divider />
-            <!-- <TagComVue></TagComVue> -->
-            <el-tag v-for="tag in [
-                { name: 'Tag 1', type: '' },
-                { name: 'Tag 2', type: 'success' },
-                { name: 'Tag 3', type: 'info' },
-                { name: 'Tag 4', type: 'warning' },
-                { name: 'Tag 5', type: 'danger' },
-            ]" :key="tag.name" class="mx-1" closable :type="tag.type">
-                {{ tag.name }}
-            </el-tag>
+            <TagComVue></TagComVue>
         </el-col>
     </el-row>
 </template>
-<script>
+<script lang="ts" setup>
 import { ref } from 'vue'
+import TagComVue from './TagCom.vue';
 const circleUrl = ref('/images/Person.jpg')
 </script>
 <style lang="scss" scoped>
