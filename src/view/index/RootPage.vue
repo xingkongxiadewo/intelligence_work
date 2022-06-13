@@ -1,5 +1,5 @@
-<script setup lang="ts"> 
-import { ref, onMounted, toRef } from 'vue'  
+<script setup lang="ts">
+import { ref, onMounted, toRef } from 'vue'
 import HeaderCom from '../../components/HeaderCom.vue'
 const url = ref('/images/logo.ico')
 url.value = "/images/logo.0606fdd2.png" 
@@ -23,49 +23,48 @@ url.value = "/images/logo.0606fdd2.png"
         <el-row class="tac">
           <el-col :span="24">
             <el-menu active-text-color="#ffd04b" background-color="#545c64" class="el-menu-vertical-demo"
-              default-active="2" text-color="#fff"  
-              router>
+              default-active="2" text-color="#fff" router>
               <!-- 默认会有个首页的入口 -->
               <el-menu-item index='/desktop'>
-                  <template #title>
-                    <el-icon>
-                      <list />
-                    </el-icon>
-                    <span>工作台</span>
-                  </template>
-                </el-menu-item>
+                <template #title>
+                  <el-icon>
+                    <list />
+                  </el-icon>
+                  <span>工作台</span>
+                </template>
+              </el-menu-item>
               <el-menu-item index='/person'>
-                  <template #title>
-                    <el-icon>
-                      <list />
-                    </el-icon>
-                    <span>信息编辑</span>
-                  </template>
-                </el-menu-item> 
-                <el-menu-item index='/menumanager'>
-                  <template #title>
-                    <el-icon>
-                      <list />
-                    </el-icon>
-                    <span>菜单管理</span>
-                  </template>
-                </el-menu-item> 
-                <el-menu-item index='/rolemanager'>
-                  <template #title>
-                    <el-icon>
-                      <list />
-                    </el-icon>
-                    <span>角色管理</span>
-                  </template>
-                </el-menu-item> 
-                <el-menu-item index='/personmanager'>
-                  <template #title>
-                    <el-icon>
-                      <list />
-                    </el-icon>
-                    <span>用户管理</span>
-                  </template>
-                </el-menu-item> 
+                <template #title>
+                  <el-icon>
+                    <list />
+                  </el-icon>
+                  <span>信息编辑</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index='/menumanager'>
+                <template #title>
+                  <el-icon>
+                    <list />
+                  </el-icon>
+                  <span>菜单管理</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index='/rolemanager'>
+                <template #title>
+                  <el-icon>
+                    <list />
+                  </el-icon>
+                  <span>角色管理</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index='/personmanager'>
+                <template #title>
+                  <el-icon>
+                    <list />
+                  </el-icon>
+                  <span>用户管理</span>
+                </template>
+              </el-menu-item>
             </el-menu>
           </el-col>
         </el-row>
