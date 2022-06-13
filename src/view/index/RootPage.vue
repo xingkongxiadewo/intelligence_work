@@ -42,6 +42,30 @@ url.value = "/images/logo.0606fdd2.png"
                     <span>信息编辑</span>
                   </template>
                 </el-menu-item> 
+                <el-menu-item index='/menumanager'>
+                  <template #title>
+                    <el-icon>
+                      <list />
+                    </el-icon>
+                    <span>菜单管理</span>
+                  </template>
+                </el-menu-item> 
+                <el-menu-item index='/rolemanager'>
+                  <template #title>
+                    <el-icon>
+                      <list />
+                    </el-icon>
+                    <span>角色管理</span>
+                  </template>
+                </el-menu-item> 
+                <el-menu-item index='/personmanager'>
+                  <template #title>
+                    <el-icon>
+                      <list />
+                    </el-icon>
+                    <span>用户管理</span>
+                  </template>
+                </el-menu-item> 
             </el-menu>
           </el-col>
         </el-row>
