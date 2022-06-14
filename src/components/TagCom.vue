@@ -9,6 +9,7 @@ const router = useRouter()
 if (store.state.TagArrs.length == 0) {
   //PS：页面初始化时捕捉不到当前路由，因此改为从地址栏截取地址来获取当前路由路径 
   let currRouter = router.getRoutes().filter(item => item.path == "/" + location.href.split('/')[3])
+  console.log(currRouter)
   if (currRouter.length > 0) {
     let info: TagModel = new TagModel()
     info.index = currRouter[0].path
