@@ -35,7 +35,7 @@ onMounted(async () => {
         PageIndex: 1,
         PageSize: 10
     }
-    // treedata.value = (await getMenuDataNew(parms)).data
+    treedata.value = (await getMenuDataNew(parms)).data
 })
 const emits = defineEmits(["CloseSeting"])
 const handleClose = (done: () => void) => {

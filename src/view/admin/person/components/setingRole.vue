@@ -42,7 +42,7 @@ const props = defineProps({
     setingRoleVisible: Boolean,
     personId: String
 })
-
+const emits = defineEmits(["CloseSetingRole"])
 const multipleTableRef = ref<InstanceType<typeof ElTable>>() 
 const handleClose = (done: () => void) => { 
 }
@@ -71,7 +71,7 @@ const submit = async () => {
         ElMessage({
             message: '请选择需要分配的角色！',
             type: 'warning',
-        })
+        }) 
     }
     else {
         const rids = arr.map((s) => { return "'" + s.id + "'" }).join(",")
@@ -88,6 +88,7 @@ const submit = async () => {
                 type: 'error',
             })
         }
+        emits("CloseSetingRole")
     }
 }
 const close = () => {

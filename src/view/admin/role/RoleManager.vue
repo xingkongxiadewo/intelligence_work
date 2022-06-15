@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref, onMounted,toRaw } from 'vue'
+import { reactive, ref, onMounted, toRaw } from 'vue'
 import type { ElTable } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
@@ -36,6 +36,7 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
 const resetForm = (ruleFormRef: FormInstance | undefined) => {
   if (!ruleFormRef) return
   ruleFormRef.resetFields()
+  LoadTableData()
 }
 const handleQuery = (index: number, row: Role) => {
   console.log(index, row)
@@ -83,27 +84,27 @@ const Del = async () => {
 const setingVisible = ref(false)
 const roleId = ref()
 const Seting = () => {
-    //获取当前选择的行
-    let arr: any[] = multipleTableRef.value?.getSelectionRows()
-    if (arr.length == 0) {
-        ElMessage({
-            message: '请选择需要分配角色的用户！',
-            type: 'warning',
-        })
-    } else if (arr.length > 1) {
-        ElMessage({
-            message: '只能选择单个用户！',
-            type: 'warning',
-        })
-    }
-    else { 
-        roleId.value = toRaw(arr[0].id)
-        setingVisible.value = true
-    }
+  //获取当前选择的行
+  let arr: any[] = multipleTableRef.value?.getSelectionRows()
+  if (arr.length == 0) {
+    ElMessage({
+      message: '请选择需要分配角色的用户！',
+      type: 'warning',
+    })
+  } else if (arr.length > 1) {
+    ElMessage({
+      message: '只能选择单个用户！',
+      type: 'warning',
+    })
+  }
+  else {
+    roleId.value = toRaw(arr[0].id)
+    setingVisible.value = true
+  }
 }
 const CloseSeting = () => {
-    setingVisible.value = false
-    LoadTableData()
+  setingVisible.value = false
+  LoadTableData()
 }
 const queryDialog = ref(false)
 const queryDialogClose = () => {
