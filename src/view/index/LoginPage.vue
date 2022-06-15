@@ -53,6 +53,7 @@
 import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { getToken } from '../../http/index'
 const url = ref('/images/logo.0606fdd2.png')
 const boxbg = ref('/images/svgs/login-box-bg.svg')
 
@@ -71,10 +72,11 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
     if (!ruleFormRef) return;
     await ruleFormRef.validate(async (valid, fields) => {
         if (valid) {
-            console.log("正在登录...")
+            //请求后端数据，获取token，并将token放入localStorage
+            const token = await getToken(form.userName, form.passWord) as any as string
             ElMessage({
                 type: "success",
-                message: "正在登录..."
+                message: token
             })
         } else {
             console.log("校验不通过！")

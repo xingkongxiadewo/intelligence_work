@@ -36,8 +36,6 @@ instance.interceptors.response.use(
                 default:
                     return Promise.reject(error.response.data)   // 返回接口返回的错误信息 
             }
-        } else if (JSON.stringify(error).indexOf("timeout") > -1) {
-            ElMessage.error("接口超时，请检查代理是否正常或者后端服务是否启动！")
         }
         else {
             ElMessage.error("遇到跨域错误，请设置代理或者修改后端允许跨域访问！")
