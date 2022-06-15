@@ -6,11 +6,7 @@ export const getRoleData = (parms: {}) => { }
 export const delRole = (id: number) => { }
 export const batchDelRole = (ids: string) => { }
 
-
-// getMenuDataNew,settingMenu
-export const getMenuDataNew = (parms: {}) => { }
-export const settingMenu = (roleId: string, ids: string) => { }
-
+ 
 
 //用户管理
 
@@ -26,4 +22,34 @@ export const settingRole = (pid: string, rids: string) => { }
 //获取token
 export const getToken = (name: string, password: string) => {
     return instance.get(http + "/Login/GetToken?name=" + name + "&password=" + password);
+}
+//获取列表
+export const getMenuDataNew = async (parms: {}) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.post(http + "/Menu/GetMenus", parms)
+}
+//添加
+export const addMenu = async (parms: {}) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.post(http + "/Menu/Add", parms)
+}
+//修改
+export const editMenu = async (parms: {}) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.post(http + "/Menu/Edit", parms)
+}
+//删除
+export const delMenu = async (id: number) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(http + "/Menu/Del?id=" + id)
+}
+//BatchDel
+export const batchDelMenu = async (ids: string) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(http + "/Menu/BatchDel?ids=" + ids)
+}
+//分配菜单
+export const settingMenu = async (rid: string,mids: string) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(`${http}/Menu/SettingMenu?rid=${rid}&mids=${mids}`)
 }

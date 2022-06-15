@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-import { reactive, ref, onMounted, toRaw } from 'vue'
+import { reactive, ref, onMounted,toRaw } from 'vue'
 import type { ElTable } from 'element-plus'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { Search, RefreshRight } from '@element-plus/icons-vue'
+import addVue from './components/add.vue'
 import { MenuModel } from './class/MenuModel'
+import { getMenuDataNew, delMenu, batchDelMenu } from '../../../http/index' 
 const ruleFormRef = ref<FormInstance>()
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const form = reactive({
@@ -25,6 +27,7 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
     if (!ruleFormRef) return;
     await ruleFormRef.validate((valid, fields) => {
         if (valid) {
+            // tableData.value = tableData.value?.filter(s => s.name == form.name) 
             LoadTableData()
         } else {
             console.log('error submit!', fields)
@@ -36,19 +39,52 @@ const resetForm = (ruleFormRef: FormInstance | undefined) => {
     ruleFormRef.resetFields()
     LoadTableData()
 }
-const handleEdit = (index: number, row: MenuModel) => {
-    ElMessage.success("编辑！")
+const handleQuery = (index: number, row: MenuModel) => {
+    console.log(index, row)
+    queryDialog.value = true
 }
+const addVisible = ref(false)
 const add = () => {
-    ElMessage.success("新增成功")
+    addVisible.value = true
 }
+const CloseAdd = () => {
+    addVisible.value = false
+    info.value = undefined
+    LoadTableData()
+}
+const info = ref()
+const handleEdit = (index: number, row: MenuModel) => {
+    info.value = JSON.stringify(row)
+    addVisible.value = true
+}
+
 //单个删除
 const handleDelete = async (index: number, row: MenuModel) => {
     tableData.value = tableData.value?.filter(s => s.id != row.id)
+    const res = await delMenu(row.id) as any as boolean
+    if (res) {
+        ElMessage({
+            message: '删除成功！',
+            type: 'success',
+        })
+    }
 }
 //批量删除
 const Del = async () => {
-    ElMessage.success("删除成功")
+    let arr: any[] = multipleTableRef.value?.getSelectionRows()
+    let ids: string = arr.map(item => { return "'" + item.id + "'" }).join(',')
+    const res = await batchDelMenu(ids) as any as boolean
+    if (res) {
+        ElMessage({
+            message: '删除成功！',
+            type: 'success',
+        })
+        LoadTableData()
+    }
+}
+const queryDialog = ref(false)
+const queryDialogClose = () => {
+    queryDialog.value = false;
 }
 //表格
 const tableData = ref<Array<MenuModel>>()
@@ -60,15 +96,15 @@ const LoadTableData = async (name: string = "") => {
         Name: form.name,
         Index: "",
         FilePath: "",
-        ParentId: 0,
+        ParentId:0,
         Description: form.description,
         PageIndex: form.pageIndex,
         PageSize: form.pageSize
     }
-    console.log("执行查询...")
-    console.log(parms)
-    form.Total = 100
-    tableData.value = []
+    let res = await getMenuDataNew(parms) as any
+    console.log(res)
+    form.Total = res.total
+    tableData.value = res.data as MenuModel[]
 }
 //分页
 const handleCurrentChange = (val: number) => {
@@ -106,7 +142,7 @@ const handleCurrentChange = (val: number) => {
                 </p>
             </div>
         </template>
-        <el-table :data="tableData" style="width: 100%" ref="multipleTableRef" row-key="id">
+        <el-table :data="tableData" style="width: 100%" ref="multipleTableRef"  row-key="id" >
             <el-table-column type="selection" width="55" />
             <el-table-column prop="id" label="序号" width="60" />
             <el-table-column label="时间" width="200">
@@ -137,6 +173,11 @@ const handleCurrentChange = (val: number) => {
                     <div>{{ scope.row.filePath }}</div>
                 </template>
             </el-table-column>
+            <!-- <el-table-column label="父级菜单">
+                <template #default="scope">
+                    <div>{{ scope.row.parent }}</div>
+                </template>
+            </el-table-column> -->
             <el-table-column label="排序">
                 <template #default="scope">
                     <div>{{ scope.row.order }}</div>
@@ -149,6 +190,7 @@ const handleCurrentChange = (val: number) => {
             </el-table-column>
             <el-table-column label="操作" align="right" width="200">
                 <template #default="scope">
+                    <!-- <el-button size="small" type="success" @click="handleQuery(scope.$index, scope.row)">详情</el-button> -->
                     <el-button size="small" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -157,6 +199,8 @@ const handleCurrentChange = (val: number) => {
         <el-pagination background layout="prev, pager, next" :total="form.Total"
             @current-change="handleCurrentChange" />
     </el-card>
+    
+    <addVue :addVisible="addVisible" :info="info" @CloseAdd="CloseAdd"></addVue>
 </template>
 <style lang="scss" scoped>
 .el-pagination {

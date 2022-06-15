@@ -1,6 +1,6 @@
 <template>
     <el-dialog v-model="addVisible" :title="info == undefined ? '新增' : '修改'" width="30%" :before-close="handleClose">
-        <el-form :model="form" label-width="120px" class="form">
+        <el-form :model="form" label-width="120px" class="form" :rules="rules" ref="ruleFormRef">
             <el-form-item label="菜单路由" prop="index">
                 <el-input v-model="form.index" />
             </el-form-item>
@@ -25,15 +25,20 @@
             </el-form-item>
             <!-- 按钮操作组 -->
             <el-form-item class="btn">
-                <el-button type="primary" @click="submit()">确定</el-button>
-                <el-button @click="close()">取消</el-button>
+                <el-button type="primary" @click="submit(ruleFormRef)">确定</el-button>
+                <el-button @click="close(ruleFormRef)">取消</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 </template>
+
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue'
+import { ref, reactive, defineProps, computed, defineEmits, onMounted, watch, toRaw } from 'vue'
+import { addMenu, editMenu, getMenuDataNew } from '../../../../http';
 import { MenuModel } from '../class/MenuModel'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+const ruleFormRef = ref<FormInstance>()
 const props = defineProps({
     addVisible: Boolean,
     info: MenuModel
@@ -48,8 +53,102 @@ const form = ref({
     isEnable: false,
     description: ""
 })
-const treedata = ref([])
-const handleClose = () => { }
-const submit = () => { }
-const close = () => { }
+const rules = reactive<FormRules>({
+    name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
+})
+//监听
+watch(
+    () => props.info,
+    (newInfo, oldInfo) => {
+        if (newInfo != undefined) {
+            let currInfo: MenuModel = (JSON.parse(newInfo as any)) as MenuModel
+            form.value = {
+                id: currInfo.id,
+                index: currInfo.index,
+                name: currInfo.name,
+                filePath: currInfo.filePath,
+                parentId: currInfo.parentId,
+                order: currInfo.order,
+                isEnable: currInfo.isEnable,
+                description: currInfo.description
+            }
+        }
+    }
+);
+//defineEmits用于定义回调事件，里面是数组，可以定义多个事件
+const emits = defineEmits(["CloseAdd"])
+const handleClose = (done: () => void) => {
+    emits("CloseAdd")
+}
+//读取下拉数据
+const treedata = ref()
+onMounted(() => {
+    LoadMenuData()
+})
+const LoadMenuData = async () => {
+    let parms = {
+        Name: "",
+        Index: "",
+        FilePath: "",
+        ParentId: 0,
+        Description: "",
+        PageIndex: 1,
+        PageSize: 10
+    }
+    treedata.value = (await getMenuDataNew(parms)).data
+}
+const submit = async (ruleFormRef: FormInstance | undefined) => {
+    if (!ruleFormRef) return
+    var parms = {
+        Id: form.value.id
+        , Name: form.value.name
+        , Index: form.value.index
+        , FilePath: form.value.filePath
+        , ParentId: form.value.parentId
+        , Order: form.value.order
+        , IsEnable: form.value.isEnable
+        , Description: form.value.description
+    }
+    console.log(parms)
+    if (props.info == undefined) {
+        // 执行添加逻辑 
+        const res = await addMenu(parms) as any as boolean
+        if (res) {
+            ElMessage({
+                message: '添加成功！',
+                type: 'success',
+            })
+        }
+    } else {
+        // 执行修改逻辑
+        const res = await editMenu(parms) as any as boolean
+        if (res) {
+            ElMessage({
+                message: '编辑成功！',
+                type: 'success',
+            })
+        }
+    }
+    //添加菜单之后重新加载下拉框
+    LoadMenuData()
+    ruleFormRef.resetFields()
+    emits("CloseAdd")
+}
+const close = (ruleFormRef: FormInstance | undefined) => {
+    if (!ruleFormRef) return
+    ruleFormRef.resetFields()
+    emits("CloseAdd")
+}
+
+
 </script>
+<style lang="scss" scoped>
+.form {
+    min-height: 500px;
+
+    .btn {
+        position: absolute;
+        bottom: 10px;
+    }
+}
+</style>
