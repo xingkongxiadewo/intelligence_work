@@ -25,5 +25,5 @@ export const settingRole = (pid: string, rids: string) => { }
 
 //获取token
 export const getToken = (name: string, password: string) => {
-    return axios.get(http + "/Login/GetToken?name=" + name + "&password=" + password);
+    return instance.get(http + "/Login/GetToken?name=" + name + "&password=" + password);
 }

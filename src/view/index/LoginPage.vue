@@ -54,6 +54,12 @@ import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { getToken } from '../../http/index'
+import Tool from '../../global'
+import { UserInfo } from './class/UserInfo'
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+const store=useStore()
+const router = useRouter()
 const url = ref('/images/logo.0606fdd2.png')
 const boxbg = ref('/images/svgs/login-box-bg.svg')
 
@@ -74,10 +80,13 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
         if (valid) {
             //请求后端数据，获取token，并将token放入localStorage
             const token = await getToken(form.userName, form.passWord) as any as string
-            ElMessage({
-                type: "success",
-                message: token
-            })
+            const user: UserInfo = JSON.parse(new Tool().FormatToken(token))
+            localStorage["token"] = token 
+            localStorage["nickname"] = user.NickName
+            store.commit("SettingNickName",user.NickName)
+            store.commit("SettingToken",token)
+            router.push({ path: '/desktop' });
+
         } else {
             console.log("校验不通过！")
             console.log(fields)

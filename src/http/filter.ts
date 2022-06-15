@@ -6,7 +6,7 @@ const instance = axios.create({
     headers: {
         'content-type': 'application/json',
     },
-    withCredentials: true,
+    // withCredentials: true,
     timeout: 5000  //5秒
 })
 //http 拦截器
