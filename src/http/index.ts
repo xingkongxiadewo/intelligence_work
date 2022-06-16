@@ -97,3 +97,8 @@ export const settingRole = async (pid: string,rids: string) => {
     instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
     return instance.get(`${http}/Users/SettingRole?pid=${pid}&rids=${rids}`)
 }
+//根据角色获取菜单
+export const getUserMenus = async () => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(`${http}/Menu/GetUserMenus`)
+}

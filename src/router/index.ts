@@ -3,10 +3,11 @@ import LoginPage from '../view/index/LoginPage.vue'
 import RootPage from '../view/index/RootPage.vue'
 import DeskTop from '../view/index/DeskTop.vue'
 import PersonCenter from '../view/index/PersonCenter.vue'
+import { MenuModel } from '../view/admin/menu/class/MenuModel'
 // import MenuManager from '../view/admin/menu/MenuManager.vue'
 // import RoleManager from '../view/admin/role/RoleManager.vue'
 // import PersonManager from '../view/admin/person/PersonManager.vue'
-
+import { getUserMenus } from '../http/index'
 let routes = [
     {
         path: "/", component: RootPage,
@@ -21,39 +22,42 @@ let routes = [
     { path: "/login", component: LoginPage }
 ]
 //通过json渲染路由
-const list = [{
-    "id": 1,
-    "index": "rolemanager",
-    "name": "角色管理",
-    "filePath": "../view/admin/role/RoleManager",
-    "parent": "rolemanager",
-    "order": 99,
-    "date": "2016-05-02",
-    "isEnable": false,
-    "children": null
-},
-{
-    "id": 2,
-    "index": "personmanager",
-    "name": "人员管理",
-    "filePath": "../view/admin/person/PersonManager",
-    "parent": "rolemanager",
-    "order": 99,
-    "date": "2016-05-02",
-    "isEnable": false,
-    "children": null
-},
-{
-    "id": 3,
-    "index": "menumanager",
-    "name": "菜单管理",
-    "filePath": "../view/admin/menu/MenuManager",
-    "parent": "rolemanager",
-    "order": 99,
-    "date": "2016-05-02",
-    "isEnable": false,
-    "children": null
-}]
+// const list = [{
+//     "id": 1,
+//     "index": "rolemanager",
+//     "name": "角色管理",
+//     "filePath": "../view/admin/role/RoleManager",
+//     "parent": "rolemanager",
+//     "order": 99,
+//     "date": "2016-05-02",
+//     "isEnable": false,
+//     "children": null
+// },
+// {
+//     "id": 2,
+//     "index": "personmanager",
+//     "name": "人员管理",
+//     "filePath": "../view/admin/person/PersonManager",
+//     "parent": "rolemanager",
+//     "order": 99,
+//     "date": "2016-05-02",
+//     "isEnable": false,
+//     "children": null
+// },
+// {
+//     "id": 3,
+//     "index": "menumanager",
+//     "name": "菜单管理",
+//     "filePath": "../view/admin/menu/MenuManager",
+//     "parent": "rolemanager",
+//     "order": 99,
+//     "date": "2016-05-02",
+//     "isEnable": false,
+//     "children": null
+// }]
+//读取webapi，获取路由列表
+const list: MenuModel[] = await getUserMenus() as any as MenuModel[]
+
 let data = []
 if (list.length > 0) {
     for (let i = 0; i < list.length; i++) {
