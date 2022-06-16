@@ -15,7 +15,7 @@
                 <el-avatar :size="30" :src="circleUrl" />
                 <el-dropdown>
                     <span class="el-dropdown-link">
-                        张三
+                        {{ NickName }}
                         <el-icon class="el-icon--right">
                             <arrow-down />
                         </el-icon>
@@ -23,9 +23,9 @@
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item>
-                                <el-link :underline="false"><span>个人主页</span></el-link>
+                                <el-link :underline="false"><span @click="goToPerson">个人主页</span></el-link>
                             </el-dropdown-item>
-                            <el-dropdown-item><span>退出</span></el-dropdown-item>
+                            <el-dropdown-item><span @click="logOut">退出</span></el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -40,9 +40,24 @@
     </el-row>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import TagComVue from './TagCom.vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import Tool from '../global';
 const circleUrl = ref('/images/Person.jpg')
+const NickName = ref()
+const router = useRouter()
+onMounted(() => {
+    NickName.value = useStore().state.NickName
+})
+const goToPerson = () => {
+    router.push({ path: "/person" })
+}
+const logOut = () => {
+    new Tool().ClearLocalStorage()
+    router.push({ path: '/login' });
+}
 </script>
 <style lang="scss" scoped>
 .el-header {
