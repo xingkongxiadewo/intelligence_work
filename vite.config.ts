@@ -9,10 +9,13 @@ export default defineConfig({
     open:true,
     proxy:{ 
       '/api':{
-        target:'http://localhost:5294/api',
+        target:'http://192.168.3.109:8081/api',
         changeOrigin:true,
         rewrite:(path) => path.replace(/^\/api/,'')
       }
     },
+  },
+  build:{
+    target:['edge90','chrome90','firefox90','safari15']
   }
 })
