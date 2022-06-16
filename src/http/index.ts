@@ -102,3 +102,8 @@ export const getUserMenus = async () => {
     instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
     return instance.get(`${http}/Menu/GetUserMenus`)
 }
+//个人中心修改用户昵称和密码
+export const editNickNameOrPassword = async (nickName: string,password: string) => {
+    instance.defaults.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    return instance.get(`${http}/Users/EditNickNameOrPassword?nickName=${nickName}&password=${password}`)
+}
