@@ -101,7 +101,7 @@ const handleSelect = (index: string) => {
                 <li>
                   <el-image style="width: 50px; height: 50px" :src="url" fit="fill" />
                 </li>
-                <li><span>ZhaoxiAdmin</span></li>
+                <li><span>天津机务段职教科</span></li>
               </ul>
             </div>
           </el-col>

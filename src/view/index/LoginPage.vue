@@ -7,9 +7,9 @@
                         <div class="homepageLogo">
                             <ul>
                                 <li>
-                                    <el-image style="width: 50px; height: 50px" :src="url" fit="fit" />
+                                    <el-image style="width: 60px; height: 50px" :src="url" fit="fit" />
                                 </li>
-                                <li><span>ZhaoxiAdmin</span></li>
+                                <li><span>天津机务段</span></li>
                             </ul>
                         </div>
                     </el-col>
@@ -17,8 +17,8 @@
                 <el-row>
                     <el-col :span="24">
                         <el-image class="boxbg" :src="boxbg" fit="fit" />
-                        <p class="p1">欢迎使用本系统</p>
-                        <p class="p2">开箱即用的中后台管理系统</p>
+                        <p class="p1">政务决策与智能分析系统</p>
+                        <p class="p2">天津机务段职教科</p>
                     </el-col>
                 </el-row>
             </div>
@@ -60,8 +60,8 @@ import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 const store=useStore()
 const router = useRouter()
-const url = ref('/images/logo.0606fdd2.png')
-const boxbg = ref('/images/svgs/login-box-bg.svg')
+const url = ref('/images/logo1.png')
+const boxbg = ref('/images/login.jpg')
 
 const form = reactive({
     userName: '',
@@ -124,7 +124,7 @@ const onSubmit = async (ruleFormRef: FormInstance | undefined) => {
             background-image: url('/images/svgs/login-bg.svg');
 
             .boxbg {
-                width: 350px;
+                width: 500px;
                 height: 350px;
                 margin-top: 100px;
             }
